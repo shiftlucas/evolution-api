@@ -9,12 +9,27 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   minify: true,
-  format: ['cjs', 'esm'],
+  format: ['esm'],
   onSuccess: async () => {
     cpSync('src/utils/translations', 'dist/translations', { recursive: true });
   },
   loader: {
     '.json': 'file',
     '.yml': 'file',
+  },
+  alias: {
+    '@api': 'src/api',
+    '@cache': 'src/cache',
+    '@config': 'src/config',
+    '@exceptions': 'src/exceptions',
+    '@libs': 'src/libs',
+    '@utils': 'src/utils',
+    '@validate': 'src/validate'
+  },
+  esbuildOptions(options) {
+    // Corrige requires em libs antigas
+    options.banner = {
+      js: `import { createRequire } from 'module'; const require = createRequire(import.meta.url);`,
+    };
   },
 });
