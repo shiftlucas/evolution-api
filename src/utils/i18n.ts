@@ -2,7 +2,10 @@ import { ConfigService, Language } from '@config/env.config';
 import fs from 'fs';
 import i18next from 'i18next';
 import path from 'path';
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const languages = ['en', 'pt-BR', 'es'];
 const translationsPath = path.join(__dirname, 'translations');
 const configService: ConfigService = new ConfigService();
